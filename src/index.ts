@@ -3,7 +3,7 @@ import { LogLevel, SapphireClient } from "@sapphire/framework";
 import { GatewayIntentBits } from "discord.js";
 
 const client = new SapphireClient({
-	defaultPrefix: "!",
+	defaultPrefix: ".",
 	caseInsensitiveCommands: true,
 	logger: {
 		level: LogLevel.Debug
@@ -14,7 +14,7 @@ const client = new SapphireClient({
 
 const main = async () => {
 	try {
-		client.logger.info("Logging in");
+		client.logger.info("logging in");
 		await client.login();
 		client.logger.info("logged in");
 	} catch (error) {
