@@ -12,7 +12,7 @@ dependencies:
     specifier: 7.0.2
     version: 7.0.2
   '@sapphire/framework':
-    specifier: ^4.6.0
+    specifier: ^4.7.1
     version: 4.7.1
   '@sapphire/plugin-logger':
     specifier: ^3.0.6
