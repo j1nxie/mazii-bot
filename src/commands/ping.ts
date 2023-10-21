@@ -5,7 +5,7 @@ import { ApplicationCommandType, Message } from "discord.js";
 @ApplyOptions<Command.Options>({
 	description: "ping pong"
 })
-export class UserCommand extends Command {
+export class PingCommand extends Command {
 	// Register Chat Input and Context Menu command
 	public override registerApplicationCommands(registry: Command.Registry) {
 		// Register Chat Input command
@@ -45,10 +45,11 @@ export class UserCommand extends Command {
 	private async sendPing(interactionOrMessage: Message | Command.ChatInputCommandInteraction | Command.ContextMenuCommandInteraction) {
 		const pingMessage =
 			interactionOrMessage instanceof Message
-				? await interactionOrMessage.channel.send({ content: "Ping?" })
-				: await interactionOrMessage.reply({ content: "Ping?", fetchReply: true });
+				? await interactionOrMessage.channel.send({ content: "ping?" })
+				: await interactionOrMessage.reply({ content: "ping?", fetchReply: true });
 
-		const content = `Pong! Bot Latency ${Math.round(this.container.client.ws.ping)}ms. API Latency ${
+		const content = `pong!
+		- bot latency: ${Math.round(this.container.client.ws.ping)}ms.\n- api latency: ${
 			pingMessage.createdTimestamp - interactionOrMessage.createdTimestamp
 		}ms.`;
 
