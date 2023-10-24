@@ -1,6 +1,7 @@
 import { ApplyOptions } from "@sapphire/decorators";
 import { Args, Command } from "@sapphire/framework";
 import { EmbedBuilder, Message } from "discord.js";
+import { fetchKanji, fetchWord } from "../helpers/search";
 
 @ApplyOptions<Command.Options>({
 	description: "fetch a word",
@@ -34,35 +35,8 @@ export class SearchCommand extends Command {
 				? await interactionOrMessage.channel.send({ embeds: [embed] })
 				: await interactionOrMessage.reply({ embeds: [embed], fetchReply: true });
 
-		const wordPromise = fetch("https://mazii.net/api/search/", {
-			method: "POST",
-			body: JSON.stringify({
-				dict: "javi",
-				type: "word",
-				query: query,
-				page: 1,
-				limit: 20
-			}),
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json, text/plain, */*"
-			}
-		}).then((rs) => rs.json());
-
-		const kanjiPromise = fetch("https://mazii.net/api/search/", {
-			method: "POST",
-			body: JSON.stringify({
-				dict: "javi",
-				type: "kanji",
-				query: query,
-				page: 1
-			}),
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json, text/plain, */*"
-			}
-		}).then((rs) => rs.json());
-
+		const wordPromise = fetchWord(query);
+		const kanjiPromise = fetchKanji(query);
 		const [wordResponse, kanjiResponse] = await Promise.all([wordPromise, kanjiPromise]);
 
 		if (wordResponse.status === 200 && kanjiResponse.status === 200) {
